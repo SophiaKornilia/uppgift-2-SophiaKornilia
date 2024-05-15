@@ -1,4 +1,5 @@
 <?php
+include_once('includes/functions.php');
 $title = "subscriber account";
 include_once('includes/header.php');
 ?>
