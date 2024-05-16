@@ -1,7 +1,21 @@
-curl -s --user 'api:2fe1fadd69a04e7093aab6d8b6c943e5-32a0fef1-6042ebe0' \
-https://api.mailgun.net/v3/sandbox26ef209e49264bbca8ce50646f208f76.mailgun.org/messages \
--F from='Excited User <mailgun@YOUR_DOMAIN_NAME>' \
-    -F to=YOU@YOUR_DOMAIN_NAME \
-    -F to=bar@example.com \
-    -F subject='Hello' \
-    -F text='Testing some Mailgun awesomeness!'
+<?php
+$ch = curl_init();
+$mailgunApiKey = getenv("MAILGUN_KEY");
+
+curl_setopt($ch, CURLOPT_URL, "https://api.mailgun.net/v3/sandbox26ef209e49264bbca8ce50646f208f76.mailgun.org/messages");
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_USERPWD, 'api:' . $mailgunApiKey); //getenv("MAILGUN_KEY");
+
+$postData = array(
+    'from' => 'postmaster@sandbox26ef209e49264bbca8ce50646f208f76.mailgun.org',
+    'to' => 'korniliaadabugday@gmail.com',
+    'subject' => 'Hello',
+    'text' => 'Testing some Mailgun awesomeness!'
+);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+$result = curl_exec($ch);
+if (!$result) {
+    echo 'Error' . curl_error($ch);
+};
+
+curl_close($ch);

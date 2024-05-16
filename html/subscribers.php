@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $query = "SELECT * 
     FROM `Subscriptions` 
     INNER JOIN Users ON Subscriptions.user_id=Users.id
-    WHERE newsletter_id = 2;";
+    WHERE newsletter_id = 2;"; //session - owner tabellen newsletter
     //koppla upp mot databasen
     $mysqli = new mysqli('db', 'root', 'notSecureChangeMe', 'task2');
     //hämta resultaten från min fråga

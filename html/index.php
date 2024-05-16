@@ -1,6 +1,6 @@
 <?php
-    $title = "index";
-    include_once('includes/header.php');
+$title = "index";
+include_once('includes/header.php');
 ?>
 <?php
 include_once('includes/footer.php')
