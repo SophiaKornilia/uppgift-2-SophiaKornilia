@@ -19,7 +19,7 @@ services:
       - 8080:80
     environment:
       PMA_HOST: db
-      MAILGUN_KEY: 2fe1fadd69a04e7093aab6d8b6c943e5-32a0fef1-6042ebe0
+      MAILGUN_KEY: 34359ff39c727d000306f52498f69a2b-32a0fef1-6889b177
   phpmyadmin:
     depends_on:
       - db
