@@ -27,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $mysqli->query($query);
 
     if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $id = $row['id'];
+
         $ch = curl_init();
         $mailgunApiKey = getenv("MAILGUN_KEY");
 
@@ -50,20 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         curl_close($ch);
 
-        // jag vill lägga in $code och $email med en insert till PasswordReset
-        $query = "INSERT INTO PasswordReset (user, code)
-        VALUES ('$email','$code')";
-
-        //koppla upp mot databasen
-        $mysqli = new mysqli('db', 'root', 'notSecureChangeMe', 'task2');
-        if ($mysqli->connect_error) {
-            die('Connection failed: ' . $mysqli->connect_error);
-        };
-
-        if ($mysqli->query($query) === TRUE) {
+        $insertQuery = "INSERT INTO PasswordReset (id,user, code) VALUES ('$id','$email', '$randomNumber')";
+        if ($mysqli->query($insertQuery) === TRUE) {
             echo "New record created successfully";
         } else {
-            echo "Error: " . $query . "<br>" . $mysqli->error;
+            echo "Error: " . $insertQuery . "<br>" . $mysqli->error;
         };
     } else {
         echo "Email doesn´t exist, try another one!";
