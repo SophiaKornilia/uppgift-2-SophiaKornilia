@@ -34,11 +34,12 @@ include_once('includes/header.php');
 foreach ($list as $item) {
     // if (isset($_GET['title']) && $item['title'] === $_GET['title']) {
 ?>
-    <div style="margin: 20px; padding: 20px; border: 1px solid #ccc;">
+    <div style="margin: 20px; padding: 20px; border: 1px solid #ccc; display:flex; flex-direction: column;">
         <p><?php echo ($item["title"]); ?></p>
         <div>
             <?php echo ($item['description']) ?>
         </div>
+        <button style="align-self: flex-end; margin-top: auto; ">Subscribe on this newletter</button>
     </div>
 <?php
     // }

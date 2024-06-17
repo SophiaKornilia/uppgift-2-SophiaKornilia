@@ -1,10 +1,6 @@
 <?php
-$title = "subscriber account";
-include_once('includes/header.php');
-?>
-<div class="subscriber-container" style="display: flex; flex-direction: column; align-items: center">
-    <h1>Successfully signed out</h1> 
-</div>
-<?php
-include_once('includes/footer.php')
-?>
+session_start();
+session_unset();
+session_destroy();
+header('Location: login.php');
+exit;
