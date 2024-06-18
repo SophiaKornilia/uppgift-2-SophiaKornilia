@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user = $result->fetch_assoc();
 
         //jämför det inmatade lösenordet med det i databasen.
-        if ($password === $user['password']) {
+        if (password_verify($password, $user['password'])) {
             $_SESSION['isloggedin'] = true;
             $_SESSION['role'] = $user['role'];
 

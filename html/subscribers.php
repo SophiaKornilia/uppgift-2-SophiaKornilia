@@ -6,12 +6,20 @@ include_once('includes/functions.php');
 //skapa en tom array för subscribers data
 $list = array();
 
+// Hämta användarens ID från sessionen
+$user_id = $_SESSION['user_id'];
+var_dump($_SESSION);
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    //Skapa sql fråga för att hämta användardata (i exemplet nr 2)
-    $query = "SELECT * 
-    FROM `Subscriptions` 
-    INNER JOIN Users ON Subscriptions.user_id=Users.id
-    WHERE newsletter_id = 2;"; //session - owner tabellen newsletter
+
+    $query = "SELECT Users.*
+    FROM Users
+    JOIN Subscriptions ON Users.id = Subscriptions.user_id
+    JOIN Newsletter ON Subscriptions.newsletter_id = Newsletter.id
+    WHERE Newsletter.customer_id = $user_id";
+
+
+    //session - owner tabellen newsletter
     //koppla upp mot databasen
     $mysqli = new mysqli('db', 'root', 'notSecureChangeMe', 'task2');
     //hämta resultaten från min fråga
@@ -20,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $subscribers = array(
-                "user_id" => $row['user_id'],
                 "firstName" => $row['firstName'],
                 "lastName" => $row['lastName'],
                 "email" => $row['email']
@@ -52,7 +59,6 @@ foreach ($list as $item) {
 }
 ?>
 <div style="margin: 20px; padding: 20px; border: 1px solid #ccc;">
-    <p><?php echo ($item["user_id"]); ?></p>
     <p><?php echo ($item["firstName"]); ?></p>
     <p><?php echo ($item["lastName"]); ?></p>
     <p><?php echo ($item["email"]); ?></p>

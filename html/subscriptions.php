@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     FROM Newsletter
     JOIN Subscriptions ON Newsletter.id = Subscriptions.Newsletter_id
     WHERE Subscriptions.user_id = $user_id";
+
+    
     //koppla upp mot databasen
     $mysqli = new mysqli('db', 'root', 'notSecureChangeMe', 'task2');
     //hämta resultaten från min fråga
