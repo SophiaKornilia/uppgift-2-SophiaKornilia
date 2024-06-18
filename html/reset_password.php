@@ -1,5 +1,5 @@
 <?php
-// ob_start();
+ob_start();
 $title = "subscriber account";
 include_once('includes/header.php');
 
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // }
     }
 };
-// ob_end_flush();
+ob_end_flush();
 
 ?>
 <div class="subscriber-container" style="display: flex; flex-direction: column; align-items: center">

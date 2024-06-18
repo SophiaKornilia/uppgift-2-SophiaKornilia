@@ -77,6 +77,7 @@ include_once('includes/header.php');
         <input type="password" name="password" id="password">
         <input type="submit" style="margin-top: 20px;">
     </form>
+    <p>Forgot your password? <a href="reset_password.php">Reset password here</a></p>
 </div>
 <?php
 include_once('includes/footer.php')
