@@ -1,5 +1,6 @@
 <?php
 include_once('includes/functions.php');
+
 //kontrollera om det skickats en postförfrågan
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -56,11 +57,19 @@ include_once('includes/header.php');
 ?>
 <div class="subscriber-container" style="display: flex; flex-direction: column; align-items: center">
     <form method="POST" style="display: flex; flex-direction: column; margin-top:20px;">
+        <?php
+        if (isset($_GET['message'])) {
+            if ($_GET['message'] === 'Created') {
+                echo "Your account was successfully created, login to get all the access!";
+            }
+        };
+        ?>
         <h3>Login</h3>
         <?php
         if (isset($_GET['error'])) {
             echo "<p style='color: red;'>Felaktiga uppgifter, vänligen försök igen.</p>";
         };
+
         ?>
         <label for="email">Email</label>
         <input type="email" name="email" id="email">

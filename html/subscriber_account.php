@@ -1,8 +1,5 @@
 <?php
-$title = "customer account";
-include_once('includes/header.php');
-?>
-<?php
+include_once('includes/functions.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //hämta den inmatade informationen från användaren
@@ -14,9 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     //validera data
     if (empty($firstName) || empty($lastName) || empty($email) || empty($password)) {
-        echo "Alla fält måste fyllas i.";
+        $_SESSION['message'] = "Alla fält måste fyllas i.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Ogiltig e-postadress.";
+        $_SESSION['message'] = "Ogiltig e-postadress.";
     } else {
         //hasha lösenordet
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -35,19 +32,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("sssss", $firstName, $lastName, $email, $hashedPassword, $role);
 
     if ($stmt->execute()) {
-        echo "Användare registrerad!";
         $firstName = $lastName = $email = $password = "";
+        $_SESSION['message'] = "Created";
+        header('Location: login.php?message=' . urlencode($_SESSION['message']));
+        unset($_SESSION['message']);
+        exit;
     } else {
-        echo "Fel: " . $sql . "<br>" . $conn->error;
+        echo "Fel: " . $sql . "<br>" . $stmt->error;
     }
 
     $stmt->close();
     $mysql->close();
 }
+
+?>
+<?php
+$title = "customer account";
+include_once('includes/header.php');
 ?>
 <div class="customer-container" style="display: flex; flex-direction: column; align-items: center">
     <form method="POST" style="display: flex; flex-direction: column; margin-top:20px;">
         <h3>Subscibe on our newsletter</h3>
+        <?php
+        //Visa eventuella meddelande från session
+        if (isset($_SESSION['message'])) {
+            echo "<p style='color: red;'>" . $_SESSION['message'] . "</p>";
+            unset($_SESSION['message']);
+        }
+        ?>
         <label for="firstName">Firstname</label>
         <input type="text" name="firstName" id="firstName">
         <label for="lastName">Lastname</label>
