@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 // När jag klickar på knappen
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe'])) {
     //Kolla vilken user om man är inloggad
-    var_dump($_SESSION);
     if (!isset($_SESSION['user_id'])) {
         echo ("Du är inte inloggad");
     } else {
