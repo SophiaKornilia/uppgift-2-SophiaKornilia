@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $list[] = $subscribers;
         }
     } else {
-        echo "<p style='color: red; text-align: center;'>Could not find any newsletters.</p>";
+        echo "<p style='color: red; text-align: center;'>Could not find any subscribers.</p>";
     }
 }
 ?>
@@ -58,11 +58,19 @@ include_once('includes/header.php');
 foreach ($list as $item) {
 }
 ?>
-<div style="margin: 20px; padding: 20px; border: 1px solid #ccc;">
-    <p><?php echo ($item["firstName"]); ?></p>
-    <p><?php echo ($item["lastName"]); ?></p>
-    <p><?php echo ($item["email"]); ?></p>
-</div>
 <?php
-include_once('includes/footer.php')
+if ($list) {
 ?>
+    <div style="margin: 20px; padding: 20px; border: 1px solid #ccc;">
+        <p><?php echo ($item["firstName"]); ?></p>
+        <p><?php echo ($item["lastName"]); ?></p>
+        <p><?php echo ($item["email"]); ?></p>
+    <?php
+} else {
+    echo ("There is no subscribers");
+};
+    ?>
+    </div>
+    <?php
+    include_once('includes/footer.php')
+    ?>
