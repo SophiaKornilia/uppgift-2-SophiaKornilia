@@ -15,7 +15,6 @@ function user_has_role($role)
 function is_signed_in()
 {
     return isset($_SESSION['isloggedin']) && $_SESSION['isloggedin'] === true;
-    
 }
 
 function is_signed_out()
@@ -28,9 +27,78 @@ function is_signed_out()
     }
 }
 
-function require_role($role){
-    if(!is_signed_in() || !user_has_role($role)){
+function require_role($role)
+{
+    if (!is_signed_in() || !user_has_role($role)) {
         header('Location: /no-access.php');
         exit();
     }
+}
+
+function fetchNewsletters()
+{
+    $list = array();
+    $mysqli = new mysqli('db', 'root', 'notSecureChangeMe', 'task2');
+
+    if ($mysqli->connect_error) {
+        die("Connection failed: " . $mysqli->connect_error);
+    }
+
+    $query = "SELECT * FROM Newsletter";
+    $result = $mysqli->query($query);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $newsletter = array(
+                "title" => $row['title'],
+                "description" => $row['description'],
+                "id" => $row['id']
+            );
+            $list[] = $newsletter;
+        }
+    }
+
+    $mysqli->close();
+    return $list;
+}
+
+function fetchSubscribedNewsletters($user_id)
+{
+    $list = array();
+
+    // Anslut till databasen
+    $mysqli = new mysqli('db', 'root', 'notSecureChangeMe', 'task2');
+
+    // Kontrollera anslutningen
+    if ($mysqli->connect_error) {
+        die("Connection failed: " . $mysqli->connect_error);
+    }
+
+    // Förbered SQL-frågan för att hämta prenumererade nyhetsbrev
+    $query = "SELECT Newsletter.*
+              FROM Newsletter
+              JOIN Subscriptions ON Newsletter.id = Subscriptions.newsletter_id
+              WHERE Subscriptions.user_id = ?";
+
+    // Förbered och utför frågan
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Lägg till resultatet i $list-arrayen
+    while ($row = $result->fetch_assoc()) {
+        $newsletter = array(
+            "title" => $row['title'],
+            "description" => $row['description'],
+            "id" => $row['id']
+        );
+        $list[] = $newsletter;
+    }
+
+    // Stäng förberedd fråga och anslutning
+    $stmt->close();
+    $mysqli->close();
+
+    return $list;
 }

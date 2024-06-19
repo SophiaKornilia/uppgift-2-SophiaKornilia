@@ -8,37 +8,15 @@ if (!is_signed_in()) {
 // Hämta användarens ID från sessionen
 $user_id = $_SESSION['user_id'];
 
+// Hämta nyhetsbrevslistan inklusive användarens prenumerationer
+
 $list = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    //Skapa sql fråga för att hämta användardata
-
-    $query = "SELECT Newsletter.*
-    FROM Newsletter
-    JOIN Subscriptions ON Newsletter.id = Subscriptions.Newsletter_id
-    WHERE Subscriptions.user_id = $user_id";
-
-    
-    //koppla upp mot databasen
-    $mysqli = new mysqli('db', 'root', 'notSecureChangeMe', 'task2');
-    //hämta resultaten från min fråga
-    $result = $mysqli->query($query);
-
-    var_dump($result);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $newsletter = array(
-                "title" => $row['title'],
-                "description" => $row['description'],
-                "id" => $row['id']
-            );
-            $list[] = $newsletter;
-        }
-    } else {
-        echo "<p style='color: red; text-align: center;'>Could not find any newsletters.</p>";
-    }
+    // Hämta prenumererade nyhetsbrev baserat på användarens ID
+    $list = fetchSubscribedNewsletters($user_id);
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsubscribe'])) {
 

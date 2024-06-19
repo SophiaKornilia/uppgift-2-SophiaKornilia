@@ -1,33 +1,11 @@
 <?php
 include_once('includes/functions.php');
+$list = fetchNewsletters();
 //Här ska vi lista innehållet från databasen(newsletters)
 //skapa en tom array för nyhetsbrevens data
-$list = array();
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    //Skapa sql fråga för att hämta användardata
-    $query = "SELECT * FROM Newsletter";
-    //koppla upp mot databasen
-    $mysqli = new mysqli('db', 'root', 'notSecureChangeMe', 'task2');
-    //hämta resultaten från min fråga
-    $result = $mysqli->query($query);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $newsletter = array(
-                "title" => $row['title'],
-                "description" => $row['description'],
-                "id" => $row['id']
-            );
-            $list[] = $newsletter;
-        }
-    } else {
-        echo "<p style='color: red; text-align: center;'>Could not find any newsletters.</p>";
-    }
-}
 
 // När jag klickar på knappen
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //Kolla vilken user om man är inloggad
     if (!isset($_SESSION['user_id'])) {
         echo ("Du är inte inloggad");
@@ -50,14 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe'])) {
 
         $insertQuery = $mysqli->prepare("INSERT INTO Subscriptions (newsletter_id, user_id) VALUES (?, ?)");
         $insertQuery->bind_param("ii", $newsletter_id, $user_id);
+
         if ($insertQuery->execute()) {
             echo "Prenumerationen har lagts till i databasen.";
         } else {
             echo "Fel vid insättning i databasen: " . $mysqli->error;
         }
 
-        $insertQuery->close();
-        $mysqli->close();
+        // $insertQuery->close();
+        // $mysqli->close();
     } else {
         echo "Fel: newsletter_id saknas";
     }
