@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['isloggedin'] = true;
+// $_SESSION['isloggedin'] = true;
 
 function get_window_title($title)
 {
@@ -15,16 +15,6 @@ function user_has_role($role)
 function is_signed_in()
 {
     return isset($_SESSION['isloggedin']) && $_SESSION['isloggedin'] === true;
-}
-
-function is_signed_out()
-{
-    if (isset($_SESSION['isloggedin']) && $_SESSION['isloggedin'] === true) {
-        session_unset();
-        session_destroy();
-        echo '<meta http-equiv="refresh" content="3;url=login.php">';
-        exit;
-    }
 }
 
 function require_role($role)

@@ -2,7 +2,10 @@
 include_once('includes/functions.php');
 //Här ska vi hämta alla premunerationer för ett specifikt nyhetsbrev
 //hämta nyhetsbrevet och hämta de som prenumererar.
-
+if (!is_signed_in()) {
+    header('Location: no-access.php');
+    exit;
+};
 //skapa en tom array för subscribers data
 $list = array();
 

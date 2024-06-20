@@ -2,7 +2,7 @@
 include_once('includes/functions.php');
 
 if (!is_signed_in()) {
-    header('Location: login.php');
+    header('Location: no-access.php');
     exit;
 };
 // Hämta användarens ID från sessionen
@@ -11,11 +11,6 @@ $user_id = $_SESSION['user_id'];
 // Hämta nyhetsbrevslistan inklusive användarens prenumerationer
 
 $list = array();
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Hämta prenumererade nyhetsbrev baserat på användarens ID
-    $list = fetchSubscribedNewsletters($user_id);
-}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsubscribe'])) {
@@ -46,6 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsubscribe'])) {
         echo "Fel: newsletter_id missing";
     }
 }
+
+$list = fetchSubscribedNewsletters($user_id);
+
 ?>
 <?php
 $title = "subscriber account";

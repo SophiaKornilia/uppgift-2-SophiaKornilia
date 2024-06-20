@@ -67,7 +67,7 @@ include_once('includes/header.php');
         <h3>Login</h3>
         <?php
         if (isset($_GET['error'])) {
-            echo "<p style='color: red;'>Felaktiga uppgifter, vänligen försök igen.</p>";
+            echo "<p style='color: red;'>Incorrect data, please try again.</p>";
         };
 
         ?>
