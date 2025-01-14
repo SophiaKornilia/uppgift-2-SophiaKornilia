@@ -1,75 +1,63 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/f9Yj_46I)
 # FSU23D-Systemutveckling-Uppgift-2
 
 Bygg en SaaS-tjänst för att kunder ska kunna hantera sina epost-listor. Vi kommer ha 2 roller av användare, kunder och prenumeranter, där en kund kan se en lista med uppgifter prenumeranter som har valt att prenumerera på deras nyhetsbrev.
 
-## Kraven för denna uppgift:
+FSU23D-Systemutveckling-Uppgift-2 är ett projekt för att bygga en SaaS-tjänst som låter kunder hantera sina e-postlistor. Projektet kräver att utveckla en plattform med två typer av användare: kunder och prenumeranter. Kunder kan se en lista på prenumeranter som har valt att prenumerera på deras nyhetsbrev, medan prenumeranter kan registrera sig för och avregistrera sig från nyhetsbrev. Projektet använder en MySQL-databas (eller MariaDB) och kräver att alla sidor är byggda i PHP, utan användning av React eller API:er. Funktioner som inloggning, lösenordsåterställning och e-postutskick är implementerade.
 
-### Betyg G
+# Projektstart
 
- 
+Detta är ett PHP-projekt som använder Docker för att köra applikationen i en container.
 
-- Databasen ska vara MySQL (eller Mariadb).
-- Alla sidor ska vara skrivna i php (ingen react mot api tillåten för denna uppgift).
-- Ett användarkonto ska lagra namn (för- och efternamn), epostadress och hash för lösenord.
-- Ett kundkonto ska ha information om nyhetsbrevet: namn och beskrivning
-- En prenumerant ska enkelt kunna börja prenumerera och sluta prenumerera på ett nyhetsbrev
-- Fungerande inloggning och återställning av lösenord, med epostutskick.
-- Epost ska skickas med en Email service provider (ESP)
+## Förutsättningar
 
- 
+- Docker måste vara installerat på din dator.
+- Om du inte har Docker, vänligen följ [denna länk för att installera Docker](https://www.docker.com/get-started).
 
-- Dessa sidor ska finnas:
+## Steg för att starta upp projektet
 
-  - Skapa konto (välj typ: kund eller prenumerant)
+1. **Öppna terminalen** i din kodredigerare (t.ex. VSCode) eller i din systemterminal.
 
-  - Lista alla nyhetsbrev
+2. **Navigera till projektets rotmapp** där din `docker-compose.yml`-fil finns, uppgift-2-SophiaKornilia
 
-    - Enskilt nyhetsbrev (prenumerera / avregistrera)
+3. **Bygg och starta containrarna**:
+   Kör följande kommando i terminalen:
 
-  - Logga in
+   docker-compose up
 
-    - Återställ lösenord
+   Detta kommer att bygga och starta containrarna som definieras i `docker-compose.yml`.
 
-      - Ange nytt lösenord
+4. **Kör Docker i bakgrunden**:
+   Starta din docker-container eller om du vill köra Docker-containrarna i bakgrunden och fortsätta arbeta i terminalen kan du använda:
 
-    - Utloggad (Endast: meddelande om att man är utloggad)
+   docker-compose up -d
 
-  - Mina sidor (Endast: välkomstmeddelande efter inloggning)
+5. **Kontrollera att containrarna körs**:
+   För att se att alla containrar körs korrekt, använd:
 
-    - Mina prenumerationer (för prenumeranter)
+   docker ps
 
-    - Mina prenumeranter (för kunder)
+6. **Åtkomst till applikationen via webbläsaren**:
+   Öppna din webbläsare och gå till:
 
-    - Mitt nyhetsbrev / Redigera nyhetsbrev (för kunder)
+   http://localhost:PORT
 
-- Menyn på sidan ska vara annorlunda baserat på om du är kund eller prenumerant
+   Ersätt `PORT` med den port som definieras i `docker-compose.yml` (vanligtvis 8080 eller 80).
 
-  - Meny för utloggad: Alla nyhetsbrev, Logga in, Skapa konto
+7. **Stäng av Docker-containrarna**:
+   När du är klar med projektet kan du stoppa och ta bort de körande containrarna med:
 
-  - Meny för prenumerant: Alla nyhetsbrev, Mina prenumerationer, Logga ut
+   docker-compose down
 
-  - Meny för kunder:  Mina prenumeranter, Mitt nyhetsbrev, Logga ut
+## Felsökning
 
-- Om man försöker visa en sida som man inte har tillgång till (baserat på användarroll) ska det visas ett meddelande om att man inte får det. Alternativt göra en redirect till en sida med samma information
+- Om du stöter på problem med att starta containrarna, kan du kolla loggarna med:
 
- 
+  docker-compose logs
 
-### Betyg VG:
+- Om byggprocessen misslyckas kan du prova att bygga containrarna manuellt med:
 
-- En användare ska kunna vara både kund och prenumerant på samma gång.
-- Ett användarkonto ska ha ett personligt salt-värde som används i hash-funktionen för lösenordet
-- Inloggade sessioner ska finnas med i databasen
-- En användare ska kunna logga ut från alla sina sessioner med ett knapptryck
-- “Ange nytt lösenord” måste vara en “hot link” som endast är giltig 20 minuter.
-- Alla sidor ska vara byggda med ett mvc-ramverk (Codeignitor är föreslaget, men andra går bra om man vill)
+  docker-compose build
 
-## Denna uppgift mäter följande moment från kursplanen:
+## Mer information
 
-- programstruktur för hantering av information, informationsflödeoch användare
-- designa system och kodbaser utifrån arkitektuella principer
-- använda Postman för att testa API:er
-
-## Denna uppgift mäter följande VG-moment från kursplanen:
-
-- Implementera MVC-ramverk
+För mer information om Docker och hur man använder det, besök [Docker dokumentation](https://docs.docker.com/).

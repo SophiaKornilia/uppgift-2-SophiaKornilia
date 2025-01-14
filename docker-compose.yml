@@ -7,7 +7,7 @@ services:
       - ./db_data:/var/www/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: notSecureChangeMe
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
   site:
     depends_on:
       - db
@@ -19,7 +19,7 @@ services:
       - 8080:80
     environment:
       PMA_HOST: db
-      MAILGUN_KEY: 34359ff39c727d000306f52498f69a2b-32a0fef1-6889b177
+      MAILGUN_KEY: ${MAILGUN_KEY}
   phpmyadmin:
     depends_on:
       - db
@@ -28,5 +28,5 @@ services:
     ports:
       - 8081:80
     environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: notSecureChangeMe
+      PMA_HOST: ${PMA_HOST}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
